@@ -1,13 +1,10 @@
 package com.example.supabase.controller;
 
-import com.example.supabase.entity.User;
-import com.example.supabase.service.UserService;
-import com.example.supabase.service.SupabaseStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
+import com.example.supabase.models.Users;
+import com.example.supabase.service.UserService;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,46 +15,37 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private SupabaseStorageService storageService;
-
-    @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    // Create a new user
+    @PostMapping
+    public ResponseEntity<Users> createUser(@RequestBody Users user) {
+        return ResponseEntity.ok(userService.createUser(user));
     }
 
+    @GetMapping
+    public ResponseEntity<List<Users>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
+    }
+
+    // Get user by ID
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    public ResponseEntity<Users> getUserById(@PathVariable int id) {
         return userService.getUserById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-
-    @PostMapping("/create")
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+ // Get user by username
+    @GetMapping("/username/{username}")
+    public ResponseEntity<Users> getUserByUsername(@PathVariable String username) {
+        return userService.getUserByUsername(username)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
-        return ResponseEntity.ok("User deleted");
-    }
-
-    @PostMapping("/{id}/upload")
-    public ResponseEntity<String> uploadImage(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
-        try {
-            String imageUrl = storageService.uploadFile(file);
-            Optional<User> userOpt = userService.getUserById(id);
-            if (userOpt.isPresent()) {
-                User user = userOpt.get();
-                user.setImg(imageUrl);
-                userService.createUser(user);
-                return ResponseEntity.ok("Image uploaded: " + imageUrl);
-            }
-            return ResponseEntity.notFound().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error: " + e.getMessage());
-        }
+    // Get user by email
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Users> getUserByEmail(@PathVariable String email) {
+        return userService.getUserByEmail(email)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }
