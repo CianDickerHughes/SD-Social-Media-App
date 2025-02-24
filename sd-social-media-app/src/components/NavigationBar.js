@@ -4,8 +4,6 @@
 import React, { useState } from "react";
 import { Navbar, Nav, Button, Container, Offcanvas } from "react-bootstrap";
 import Login from "./login";
-import "bootstrap/dist/css/bootstrap.min.css";
-
 
 // Navigation Bar in secondary theme
 // Links to the home, create, read pages and Guess Countres Game
@@ -29,7 +27,7 @@ const NavigationBar = () => {
             <Button variant="outline-light" className="me-2" onClick={handleLoginShow}>
               Login
             </Button>
-            <Button variant="primary">Sign Up</Button>
+            <Button href="signIn" variant="primary">Sign Up</Button>
           </div>
         </Container>
       </Navbar>

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Modal, Form, Button, Alert } from "react-bootstrap";
-import axios from "axios"; // Import Axios for API requests
+import axios from "axios"; // Import Axios
 
 const Login = ({ showLogin, handleLoginClose }) => {
   const [identifier, setIdentifier] = useState(""); // Email or Username
   const [password, setPassword] = useState("");
   const [error, setError] = useState(""); // Error message state
 
+  // Async function to handle login
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(""); // Clear previous errors
@@ -17,11 +18,11 @@ const Login = ({ showLogin, handleLoginClose }) => {
         ? `http://localhost:8080/users/email/${identifier}`
         : `http://localhost:8080/users/username/${identifier}`;
 
+      // Async GET request
       const response = await axios.get(url);
 
       if (response.data) {
         console.log("User found:", response.data);
-        // Add password verification logic here if needed
         alert("Login successful!");
         handleLoginClose(); // Close modal on success
       } else {
