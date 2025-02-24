@@ -38,3 +38,24 @@ body {background-color: #282828; color: white;}
     transform: rotate(360deg);
   }
 }
+
+.modal-content {
+  background-color: #282828 !important;
+  color: white !important;
+}
+
+.modal-header {
+  background-color: #282828 !important;
+  color: white !important;
+}
+
+.modal-body {
+  background-color: #282828 !important;
+  color: white !important;
+}
+
+.form-control {
+  background-color: #444 !important;
+  color: white !important;
+  border: none !important;
+}

@@ -1,7 +1,5 @@
 import React from 'react';
 
-
-
 // Return the home of the home screen
 const Content = () => {
   return (
