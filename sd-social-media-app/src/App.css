@@ -1,4 +1,7 @@
-body {background-color: #282828; color: white;}
+body {
+  background-color: #282828; 
+  color: white;
+}
 
 .App {
   text-align: center;

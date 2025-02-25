@@ -4,6 +4,7 @@
 import React, { useState } from "react";
 import { Navbar, Nav, Button, Container, Offcanvas } from "react-bootstrap";
 import Login from "./login";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Navigation Bar in secondary theme
 // Links to the home, create, read pages and Guess Countres Game
@@ -17,12 +18,13 @@ const NavigationBar = () => {
 
   const handleLoginClose = () => setShowLogin(false);
   const handleLoginShow = () => setShowLogin(true);
+  
   return (
     <>
       <Navbar bg="dark" variant="dark" expand={false}>
         <Container>
           <Navbar.Toggle aria-controls="offcanvasNavbar" onClick={handleShow} />
-          <Navbar.Brand href="\">MyBrand</Navbar.Brand>
+          <Navbar.Brand href="\" style={{ padding: "0px 15px" }}>SD-Social-Media-App</Navbar.Brand>
           <div className="ms-auto">
             <Button variant="outline-light" className="me-2" onClick={handleLoginShow}>
               Login

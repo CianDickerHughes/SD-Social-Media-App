@@ -17,9 +17,21 @@ public class UserController {
     private UserService userService;
 
     // Create a new user
+ // Standard Create a new user endpoint
     @PostMapping
     public ResponseEntity<Users> createUser(@RequestBody Users user) {
         return ResponseEntity.ok(userService.createUser(user));
+    }
+    
+    // Custom Create User Endpoint renamed to addUser
+    @PostMapping("/addUser")
+    public ResponseEntity<Users> addUser(@RequestBody Users user) {
+        // Additional validation can be added here
+        if (user.getUsername() == null || user.getEmail() == null || user.getPassword() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        Users createdUser = userService.createUser(user);
+        return ResponseEntity.ok(createdUser);
     }
 
     @GetMapping
