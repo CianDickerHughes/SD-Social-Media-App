@@ -8,43 +8,16 @@ const SignUp = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [message, setMessage] = useState("");
-
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setImage(file); // Store file for upload
-      setImageUrl(""); // Clear URL input if a file is selected
-    }
-  };
-
-  const handleUrlChange = (event) => {
-    setImageUrl(event.target.value);
-    setImage(null); // Clear file upload if a URL is entered
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Select the final image source (either uploaded file or URL)
-    let finalImageUrl = imageUrl;
-
-    if (image) {
-      // If a file is uploaded, send it to a backend image upload endpoint
-      const formData = new FormData();
-      formData.append("file", image);
-
-      try {
-        const uploadResponse = await axios.post("http://localhost:8080/users/uploadImage", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-        finalImageUrl = uploadResponse.data.imageUrl; // Get URL from the response
-      } catch (error) {
-        setMessage("Image upload failed");
-        return;
-      }
+    // Ensure the image URL is provided
+    if (!imageUrl.trim()) {
+      setMessage("Please provide an image URL.");
+      return;
     }
 
     // Send user data to the backend
@@ -53,9 +26,10 @@ const SignUp = () => {
         username,
         email,
         password,
-        img: finalImageUrl,
+        profileImgUrl: imageUrl, 
       });
 
+      // If user data has been send
       if (response.status === 200) {
         setMessage("User registered successfully!");
       }
@@ -68,8 +42,8 @@ const SignUp = () => {
     <div style={{ textAlign: "center", padding: "20px", backgroundColor: "#282828", color: "white" }}>
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "10px" }}>
-          <input
+        <div style={{ marginBottom: "10px" }}> { /* UserName */ }
+          <input 
             type="text"
             placeholder="Username"
             value={username}
@@ -78,7 +52,7 @@ const SignUp = () => {
             required
           />
         </div>
-        <div style={{ marginBottom: "10px" }}>
+        <div style={{ marginBottom: "10px" }}> { /* Email */ }
           <input
             type="email"
             placeholder="Email"
@@ -88,7 +62,7 @@ const SignUp = () => {
             required
           />
         </div>
-        <div style={{ marginBottom: "10px" }}>
+        <div style={{ marginBottom: "10px" }}> { /* Password */ }
           <input
             type="password"
             placeholder="Password"
@@ -99,34 +73,19 @@ const SignUp = () => {
           />
         </div>
 
-        <div style={{ marginBottom: "10px" }}>
-          <label>Profile Picture (Upload or Paste URL)</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            style={{ display: "block", margin: "10px auto" }}
-          />
+        <div style={{ marginBottom: "10px" }}> { /* Url Profile Picture */ }
+          <label>Profile Picture (Paste Image URL)</label><br></br>
           <input
             type="text"
             placeholder="Image URL"
             value={imageUrl}
-            onChange={handleUrlChange}
+            onChange={(e) => setImageUrl(e.target.value)}
             style={{ padding: "8px", width: "80%", marginTop: "10px" }}
+            required
           />
         </div>
-
-        {image && (
-          <div style={{ marginBottom: "10px" }}>
-            <img
-              src={URL.createObjectURL(image)}
-              alt="Profile Preview"
-              style={{ width: "100px", height: "100px", borderRadius: "50%" }}
-            />
-          </div>
-        )}
-
-        {imageUrl && (
+        { /* Deplay Url Profile Picture */ }
+        {imageUrl && ( 
           <div style={{ marginBottom: "10px" }}>
             <img src={imageUrl} alt="Profile Preview" style={{ width: "100px", height: "100px", borderRadius: "50%" }} />
           </div>

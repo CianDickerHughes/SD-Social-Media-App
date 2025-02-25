@@ -17,7 +17,7 @@ public class UserController {
     private UserService userService;
 
     // Create a new user
- // Standard Create a new user endpoint
+    // Standard Create a new user endpoint
     @PostMapping
     public ResponseEntity<Users> createUser(@RequestBody Users user) {
         return ResponseEntity.ok(userService.createUser(user));

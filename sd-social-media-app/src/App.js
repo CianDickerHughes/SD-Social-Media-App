@@ -15,8 +15,8 @@ function App() {
       <NavigationBar /* navbar with routing *//>
       <Routes>
         <Route path="/" element={<Content /> /* The Content page */} />
-        <Route path="/signIn" element={<SignIn /> /* The Content page */} />
-        <Route path="/Messages" element={<Messages /> /* The Content page */} />
+        <Route path="/signIn" element={<SignIn /> /* The signIn page */} />
+        <Route path="/Messages" element={<Messages /> /* The Messages page */} />
       </Routes>
     </Router>
     

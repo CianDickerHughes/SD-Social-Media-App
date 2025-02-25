@@ -16,18 +16,18 @@ const Login = ({ showLogin, handleLoginClose }) => {
     setError(""); // Clear previous errors
 
     try {
-      const isEmail = identifier.includes("@"); // Check if it's an email
+      const isEmail = identifier.includes("@"); // Check if it's an email or username
       const url = isEmail
         ? `http://localhost:8080/users/email/${identifier}`
         : `http://localhost:8080/users/username/${identifier}`;
 
       // Async GET request
       const response = await axios.get(url);
-
+      
       if (response.data) {
         console.log("User found:", response.data);
         alert("Login successful!");
-        handleLoginClose(); // Close modal on success
+        handleLoginClose(); 
       } else {
         setError("User not found!");
       }
@@ -44,7 +44,7 @@ const Login = ({ showLogin, handleLoginClose }) => {
       <Modal.Body>
         {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={handleLogin}>
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-3"> { /* Email or Username */ }
             <Form.Label>Email or Username</Form.Label>
             <Form.Control
               type="text"
@@ -54,7 +54,7 @@ const Login = ({ showLogin, handleLoginClose }) => {
               required
             />
           </Form.Group>
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-3"> { /* Password */ }
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
