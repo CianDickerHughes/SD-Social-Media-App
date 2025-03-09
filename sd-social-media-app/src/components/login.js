@@ -16,20 +16,18 @@ const Login = ({ showLogin, handleLoginClose }) => {
     setError(""); // Clear previous errors
 
     try {
-      const isEmail = identifier.includes("@"); // Check if it's an email or username
-      const url = isEmail
-        ? `http://localhost:8080/users/email/${identifier}`
-        : `http://localhost:8080/users/username/${identifier}`;
+      const response = await axios.post("http://localhost:8080/users/login", {
+        identifier,
+        password,
+      });
 
-      // Async GET request
-      const response = await axios.get(url);
-      
       if (response.data) {
-        console.log("User found:", response.data);
-        alert("Login successful!");
-        handleLoginClose(); 
-      } else {
-        setError("User not found!");
+        localStorage.setItem("userIdentifier", identifier); // Store identifier
+        localStorage.setItem("userId", response.data.id);
+
+        console.log("Login successful:", response.data);
+        window.location.reload(); // Reload the page
+        handleLoginClose();
       }
     } catch (err) {
       setError("Invalid login credentials!");

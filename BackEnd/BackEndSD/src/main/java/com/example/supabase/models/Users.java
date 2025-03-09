@@ -29,6 +29,9 @@ public class Users {
 
     @Column(name = "updated_at")
     private Instant updatedAt;
+    
+    @Column(name = "is_private", nullable = false)
+    private boolean isPrivate = false;
 
     // No-argument constructor (required by JPA)
     public Users() {
@@ -37,13 +40,14 @@ public class Users {
     }
 
     // Constructor
-    public Users(String username, String email, String password, String profileImgUrl) {
+    public Users(String username, String email, String password, String profileImgUrl, boolean isPrivate) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.profileImgUrl = profileImgUrl;
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
+        this.isPrivate = isPrivate;
     }
 
     // Getters and Setters
@@ -101,5 +105,19 @@ public class Users {
 
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public boolean getIsPrivate() {  
+        return isPrivate;
+    }
+
+    public void setIsPrivate(boolean isPrivate) {  
+        this.isPrivate = isPrivate;
+    }
+
+    // Automatically update "updatedAt" before saving to DB
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = Instant.now();
     }
 }

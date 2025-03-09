@@ -17,6 +17,7 @@ function App() {
         <Route path="/" element={<Content /> /* The Content page */} />
         <Route path="/signIn" element={<SignIn /> /* The signIn page */} />
         <Route path="/Messages" element={<Messages /> /* The Messages page */} />
+        <Route path="/Profile" element={<Profile /> /* The Profile page */} />
       </Routes>
     </Router>
     

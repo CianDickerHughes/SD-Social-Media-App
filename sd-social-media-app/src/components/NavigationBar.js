@@ -1,10 +1,11 @@
 // Cian Dicker-Hughes
 // G00415413
 
-import React, { useState } from "react";
-import { Navbar, Nav, Button, Container, Offcanvas } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Navbar, Nav, Button, Container, Offcanvas, Image, Dropdown, DropdownButton } from "react-bootstrap";
 import Login from "./login";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from "axios"; // Import Axios
 
 // Navigation Bar in secondary theme
 // Links to the home, create, read pages and Guess Countres Game
@@ -12,28 +13,84 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const NavigationBar = () => {
   const [show, setShow] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+  const [userData, setUserData] = useState(null); // Store user data (including profile image)
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const handleLoginClose = () => setShowLogin(false);
   const handleLoginShow = () => setShowLogin(true);
+
+  useEffect(() => {
+    // Check if user is logged in (check localStorage for userId)
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      setIsLoggedIn(true);
+      // Fetch user data (profile image) from the API
+      fetchUserData(userId);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
+  // Fetch user data from API using user ID
+  const fetchUserData = async (userId) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/users/${userId}`);
+      setUserData(response.data); // Store user data including profile image URL
+    } catch (err) {
+      console.error("Error fetching user data:", err);
+    }
+  };
+
+  // Handle logout by clearing the user data from localStorage and state
+  const handleLogout = () => {
+    localStorage.removeItem("userId");
+    setUserData(null);
+    setIsLoggedIn(false);
+  };
   
   return (
     <>
       <Navbar bg="dark" variant="dark" expand={false}>
         <Container>
           <Navbar.Toggle aria-controls="offcanvasNavbar" onClick={handleShow} />
-          <Navbar.Brand href="\" style={{ padding: "0px 15px" }}>SD-Social-Media-App</Navbar.Brand>
+          <Navbar.Brand href="/" style={{ padding: "0px 15px" }}>SD-Social-Media-App</Navbar.Brand>
           <div className="ms-auto">
-            <Button variant="outline-light" className="me-2" onClick={handleLoginShow}>
-              Login
-            </Button>
-            <Button href="signIn" variant="primary">Sign Up</Button>
+            {/* If the user is logged in, show profile image and dropdown for logout/profile options */}
+            {isLoggedIn ? (
+              <Dropdown align="end">
+                <Dropdown.Toggle variant="outline-light" id="dropdown-profile" style={{ border: "none", background: "transparent" }}>
+                  <Image
+                    src={userData?.profileImgUrl} // Display profile image
+                    alt="Profile"
+                    roundedCircle
+                    width="40" // Size of the profile image
+                    height="40"
+                    style={{ cursor: "pointer" }}
+                  />
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="/profile">View Profile</Dropdown.Item>
+                  <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            ) : (
+              <>
+                <Button variant="outline-light" className="me-2" onClick={handleLoginShow}>
+                  Login
+                </Button>
+                <Button href="signIn" variant="primary">
+                  Sign Up
+                </Button>
+              </>
+            )}
           </div>
         </Container>
       </Navbar>
-      
+
       <Offcanvas show={show} onHide={handleClose} placement="start">
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Main Menu</Offcanvas.Title>

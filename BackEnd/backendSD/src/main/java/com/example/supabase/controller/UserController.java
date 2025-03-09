@@ -3,6 +3,7 @@ package com.example.supabase.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.example.supabase.dto.LoginRequest;
 import com.example.supabase.models.Users;
 import com.example.supabase.service.UserService;
 import java.util.List;
@@ -18,10 +19,10 @@ public class UserController {
 
     // Create a new user
     // Standard Create a new user endpoint
-    @PostMapping
+    /*@PostMapping
     public ResponseEntity<Users> createUser(@RequestBody Users user) {
         return ResponseEntity.ok(userService.createUser(user));
-    }
+    }*/
     
     // Custom Create User Endpoint renamed to addUser
     @PostMapping("/addUser")
@@ -32,6 +33,30 @@ public class UserController {
         }
         Users createdUser = userService.createUser(user);
         return ResponseEntity.ok(createdUser);
+    }
+    
+    // User Login (Accepts either username or email)
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
+        String identifier = loginRequest.getIdentifier();
+        String password = loginRequest.getPassword();
+
+        // Try finding user by username or email
+        Optional<Users> userOptional = userService.getUserByUsername(identifier);
+        if (!userOptional.isPresent()) {
+            userOptional = userService.getUserByEmail(identifier);
+        }
+
+        if (userOptional.isPresent()) {
+            Users user = userOptional.get();
+            if (user.getPassword().equals(password)) { 
+                return ResponseEntity.ok(user);
+            } else {
+                return ResponseEntity.badRequest().body("Invalid password");
+            }
+        } else {
+            return ResponseEntity.badRequest().body("User not found");
+        }
     }
 
     @GetMapping
