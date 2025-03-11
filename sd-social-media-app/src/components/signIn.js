@@ -15,12 +15,6 @@ const SignUp = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Ensure the image URL is provided
-    if (!imageUrl.trim()) {
-      setMessage("Please provide an image URL.");
-      return;
-    }
-
     // Send user data to the backend
     try {
       const response = await axios.post("http://localhost:8080/users/addUser", {
@@ -47,7 +41,7 @@ const SignUp = () => {
       <div style={{ marginBottom: "10px" }}> { /* Name */ }
           <input 
             type="text"
-            placeholder="name"
+            placeholder="Display Name"
             value={name}
             onChange={(e) => setname(e.target.value)}
             style={{ padding: "8px", width: "80%" }}
@@ -86,14 +80,13 @@ const SignUp = () => {
         </div>
 
         <div style={{ marginBottom: "10px" }}> { /* Url Profile Picture */ }
-          <label>Profile Picture (Paste Image URL)</label><br></br>
+          <label>Profile Picture (Optional)</label><br />
           <input
             type="text"
             placeholder="Image URL"
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
             style={{ padding: "8px", width: "80%", marginTop: "10px" }}
-            required
           />
         </div>
         { /* Deplay Url Profile Picture */ }

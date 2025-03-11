@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Button, Container, Offcanvas, Image, Dropdown, DropdownButton } from "react-bootstrap";
 import Login from "./login";
+import profileIMG from '../img/profile-user.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 
@@ -64,7 +65,7 @@ const NavigationBar = () => {
               <Dropdown align="end">
                 <Dropdown.Toggle variant="outline-light" id="dropdown-profile" style={{ border: "none", background: "transparent" }}>
                   <Image
-                    src={userData?.profileImgUrl} // Display profile image
+                    src={userData?.profileImgUrl || profileIMG} // Display profile image
                     alt="Profile"
                     roundedCircle
                     width="40" // Size of the profile image
@@ -116,7 +117,6 @@ const NavigationBar = () => {
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>
-
 
       {/* Login Modal */}
       <Login showLogin={showLogin} handleLoginClose={handleLoginClose} />
