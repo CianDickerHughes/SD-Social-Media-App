@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const SignUp = () => {
+  const [name, setname] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,6 +24,7 @@ const SignUp = () => {
     // Send user data to the backend
     try {
       const response = await axios.post("http://localhost:8080/users/addUser", {
+        name,
         username,
         email,
         password,
@@ -42,6 +44,16 @@ const SignUp = () => {
     <div style={{ textAlign: "center", padding: "20px", backgroundColor: "#282828", color: "white" }}>
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
+      <div style={{ marginBottom: "10px" }}> { /* Name */ }
+          <input 
+            type="text"
+            placeholder="name"
+            value={name}
+            onChange={(e) => setname(e.target.value)}
+            style={{ padding: "8px", width: "80%" }}
+            required
+          />
+        </div>
         <div style={{ marginBottom: "10px" }}> { /* UserName */ }
           <input 
             type="text"

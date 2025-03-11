@@ -12,6 +12,9 @@ public class Users {
     @Column(name = "user_id") // Maps to PostgreSQL column
     private int id;
 
+    @Column(name = "uname", nullable = false, unique = true)
+    private String name;
+    
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
@@ -27,30 +30,29 @@ public class Users {
     @Column(name = "created_at", updatable = false)
     private Instant createdAt;
 
-    @Column(name = "updated_at")
-    private Instant updatedAt;
-    
     @Column(name = "is_private", nullable = false)
     private boolean isPrivate = false;
+    
+    @Column(name = "bio", nullable = true)
+    private String  bio;
 
     // No-argument constructor (required by JPA)
     public Users() {
         this.createdAt = Instant.now();
-        this.updatedAt = Instant.now();
     }
 
     // Constructor
-    public Users(String username, String email, String password, String profileImgUrl, boolean isPrivate) {
+    public Users(String name, String username, String email, String password, String profileImgUrl, boolean isPrivate) {
+    	this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
         this.profileImgUrl = profileImgUrl;
         this.createdAt = Instant.now();
-        this.updatedAt = Instant.now();
         this.isPrivate = isPrivate;
     }
 
-    // Getters and Setters
+	// Getters and Setters
     public int getId() {
         return id;
     }
@@ -58,6 +60,14 @@ public class Users {
     public void setId(int id) {
         this.id = id;
     }
+    
+    public String getName() {
+ 		return name;
+ 	}
+
+ 	public void setName(String name) {
+ 		this.name = name;
+ 	}
 
     public String getUsername() {
         return username;
@@ -99,25 +109,11 @@ public class Users {
         this.createdAt = createdAt;
     }
 
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     public boolean getIsPrivate() {  
         return isPrivate;
     }
 
     public void setIsPrivate(boolean isPrivate) {  
         this.isPrivate = isPrivate;
-    }
-
-    // Automatically update "updatedAt" before saving to DB
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedAt = Instant.now();
     }
 }

@@ -57,7 +57,7 @@ const NavigationBar = () => {
       <Navbar bg="dark" variant="dark" expand={false}>
         <Container>
           <Navbar.Toggle aria-controls="offcanvasNavbar" onClick={handleShow} />
-          <Navbar.Brand href="/" style={{ padding: "0px 15px" }}>SD-Social-Media-App</Navbar.Brand>
+          <Navbar.Brand href="/" style={{ padding: "0px 15px" }}>SD-Social-Media</Navbar.Brand>
           <div className="ms-auto">
             {/* If the user is logged in, show profile image and dropdown for logout/profile options */}
             {isLoggedIn ? (
