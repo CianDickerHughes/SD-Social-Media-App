@@ -22,7 +22,7 @@ const Login = ({ showLogin, handleLoginClose }) => {
       });
 
       if (response.data) {
-        localStorage.setItem("userIdentifier", identifier); // Store identifier
+        //localStorage.setItem("userIdentifier", identifier); // Store identifier
         localStorage.setItem("userId", response.data.id);
 
         console.log("Login successful:", response.data);

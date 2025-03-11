@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Button, Container, Offcanvas, Image, Dropdown, DropdownButton } from "react-bootstrap";
 import Login from "./login";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from "axios"; // Import Axios
+import axios from "axios";
 
 // Navigation Bar in secondary theme
 // Links to the home, create, read pages and Guess Countres Game
@@ -49,6 +49,7 @@ const NavigationBar = () => {
     localStorage.removeItem("userId");
     setUserData(null);
     setIsLoggedIn(false);
+    window.location.reload(); // Reload the page
   };
   
   return (
@@ -97,15 +98,25 @@ const NavigationBar = () => {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Nav className="flex-column" style={{ fontSize: "18px", fontWeight: "bold", color: "#333" }}>
-            <Nav.Link href="/" onClick={handleClose} style={{ padding: "10px 15px" }}>Home</Nav.Link>
-            <Nav.Link href="/bookmark" onClick={handleClose} style={{ padding: "10px 15px" }}>Bookmark</Nav.Link>
-            <Nav.Link href="/messages" onClick={handleClose} style={{ padding: "10px 15px" }}>Messages</Nav.Link>
-            <Nav.Link href="/profile" onClick={handleClose} style={{ padding: "10px 15px" }}>Profile</Nav.Link>
-            <Nav.Link href="/settings" onClick={handleClose} style={{ padding: "10px 15px" }}>Settings</Nav.Link>
-            <Nav.Link href="/post" onClick={handleClose} style={{ padding: "10px 15px" }}>Make A Post</Nav.Link>
+            {isLoggedIn ? (
+              <>
+                <Nav.Link href="/" onClick={handleClose} style={{ padding: "10px 15px" }}>Home</Nav.Link>
+                <Nav.Link href="/bookmark" onClick={handleClose} style={{ padding: "10px 15px" }}>Bookmark</Nav.Link>
+                <Nav.Link href="/messages" onClick={handleClose} style={{ padding: "10px 15px" }}>Messages</Nav.Link>
+                <Nav.Link href="/profile" onClick={handleClose} style={{ padding: "10px 15px" }}>Profile</Nav.Link>
+                <Nav.Link href="/settings" onClick={handleClose} style={{ padding: "10px 15px" }}>Settings</Nav.Link>
+                <Nav.Link href="/post" onClick={handleClose} style={{ padding: "10px 15px" }}>Make A Post</Nav.Link>
+              </>
+            ) : (
+              <>
+                <Nav.Link href="/" onClick={handleClose} style={{ padding: "10px 15px" }}>Home</Nav.Link>
+                <Nav.Link href="/settings" onClick={handleClose} style={{ padding: "10px 15px" }}>Settings</Nav.Link>
+              </>
+            )}
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>
+
 
       {/* Login Modal */}
       <Login showLogin={showLogin} handleLoginClose={handleLoginClose} />
@@ -127,6 +138,5 @@ const activeNavLinkStyle = {
   fontSize: '20px',
   fontWeight: 'bold'
 };
-
 
 export default NavigationBar;
