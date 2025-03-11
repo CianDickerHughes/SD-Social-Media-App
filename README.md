@@ -22,6 +22,13 @@ This Project been made React, Node.js for the Front-End, Spring Boot Java for th
 --------------------------------------------------------------------------
 * Working in Progress 
 ### Server
+<p>localhost</p>
+<p>Stuff Needed to run Locally</p>
+* ([PostgreSQL]https://www.postgresql.org/download/)
+* Tables 
+* ([Spring Boot Java])
+
+
 * First go into BackEnd folder - `cd BackEnd` <br>
 * Run This Command to start Server - `nodemon server.js` <br>
 * This will start the Server at  `http://localhost:4000/` <br>
