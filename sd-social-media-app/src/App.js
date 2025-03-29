@@ -7,6 +7,7 @@ import Content from './components/content';
 import SignIn from './components/signIn';
 import Profile from './components/Profile'
 import Messages from './components/Messages'
+import Post from './components/Post';
 import './App.css';
 
 function App() {
@@ -16,8 +17,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Content /> /* The Content page */} />
         <Route path="/signIn" element={<SignIn /> /* The signIn page */} />
-        <Route path="/Messages" element={<Messages /> /* The Messages page */} />
-        <Route path="/Profile" element={<Profile /> /* The Profile page */} />
+        <Route path="/messages" element={<Messages /> /* The Messages page */} />
+        <Route path="/profile" element={<Profile /> /* The Profile page */} />
+        <Route path="/post" element={<Post /> /* The Profile page */} />
       </Routes>
     </Router>
     
