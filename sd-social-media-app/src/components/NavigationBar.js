@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Button, Container, Offcanvas, Image, Dropdown, DropdownButton } from "react-bootstrap";
 import Login from "./login";
+import Post from "./Post";
 import profileIMG from '../img/profile-user.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
@@ -16,12 +17,16 @@ const NavigationBar = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [userData, setUserData] = useState(null); // Store user data (including profile image)
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
+  const [showPost, setShowPost] = useState(false); // State for post modal
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const handleLoginClose = () => setShowLogin(false);
   const handleLoginShow = () => setShowLogin(true);
+
+  const handlePostClose = () => setShowPost(false); // Close post modal
+  const handlePostShow = () => setShowPost(true); // Open post modal
 
   useEffect(() => {
     // Check if user is logged in (check localStorage for userId)
@@ -106,8 +111,8 @@ const NavigationBar = () => {
                 <Nav.Link href="/messages" onClick={handleClose} style={{ padding: "10px 15px" }}>Messages</Nav.Link>
                 <Nav.Link href="/profile" onClick={handleClose} style={{ padding: "10px 15px" }}>Profile</Nav.Link>
                 <Nav.Link href="/settings" onClick={handleClose} style={{ padding: "10px 15px" }}>Settings</Nav.Link>
-                <Nav.Link href="/post" onClick={handleClose} style={{ padding: "10px 15px" }}>Make A Post</Nav.Link>
-              </>
+                <Nav.Link onClick={() => { handlePostShow(); handleClose(); }}>Make A Post</Nav.Link>
+                </>
             ) : (
               <>
                 <Nav.Link href="/" onClick={handleClose} style={{ padding: "10px 15px" }}>Home</Nav.Link>
@@ -118,8 +123,9 @@ const NavigationBar = () => {
         </Offcanvas.Body>
       </Offcanvas>
 
-      {/* Login Modal */}
+      {/* Login & Post Modal */}
       <Login showLogin={showLogin} handleLoginClose={handleLoginClose} />
+      <Post showPost={showPost} handlePostClose={handlePostClose} />
     </>
   );
 };
