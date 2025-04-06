@@ -1,3 +1,6 @@
+// Cian Dicker-Hughes
+// G00415413
+
 package com.example.supabase;
 
 import org.springframework.boot.SpringApplication;

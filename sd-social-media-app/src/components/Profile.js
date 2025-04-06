@@ -7,10 +7,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios"; 
 
 const Profile = () => {
-
   const [userData, setUserData] = useState(null); // Store user data (including profile image)
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
 
+  // Check if user is logged in when the component mounts
   useEffect(() => {
     // Check if user is logged in (check localStorage for userId)
     const userId = localStorage.getItem("userId");

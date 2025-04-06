@@ -1,3 +1,6 @@
+// Cian Dicker-Hughes
+// G00415413
+
 package com.example.supabase.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;

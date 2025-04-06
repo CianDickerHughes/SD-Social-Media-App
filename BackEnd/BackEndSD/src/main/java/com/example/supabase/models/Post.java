@@ -1,3 +1,6 @@
+// Cian Dicker-Hughes
+// G00415413
+
 package com.example.supabase.models;
 
 import org.springframework.data.annotation.Id;
@@ -8,16 +11,15 @@ public class Post {
 
 	@Id
     private String id;
-    private int userId; // Reference to the user stored in PostgreSQL
+    private long userId; // Reference to the user stored in PostgreSQL
     private String img; // URL or base64 string of the image
     private String description; // Message or caption for the post
-
     
     // No-argument constructor 
     public Post() {}
 
     // Constructor
-    public Post(int userId, String img, String description) {
+    public Post(long userId, String img, String description) {
         this.userId = userId;
         this.img = img;
         this.description = description;
@@ -32,11 +34,11 @@ public class Post {
     	this.id = id; 
     }
 
-    public int getUserId() { 
+    public long getUserId() { 
     	return userId; 
     }
     
-    public void setUserId(int userId) { 
+    public void setUserId(long userId) { 
     	this.userId = userId; 
     }
 

@@ -28,6 +28,7 @@ const NavigationBar = () => {
   const handlePostClose = () => setShowPost(false); // Close post modal
   const handlePostShow = () => setShowPost(true); // Open post modal
 
+  // Check if user is logged in when the component mounts
   useEffect(() => {
     // Check if user is logged in (check localStorage for userId)
     const userId = localStorage.getItem("userId");

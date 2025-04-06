@@ -12,6 +12,7 @@ const SignUp = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [message, setMessage] = useState("");
 
+  // Function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
 

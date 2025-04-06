@@ -1,3 +1,6 @@
+// Cian Dicker-Hughes
+// G00415413
+
 package com.example.supabase.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,10 @@ public class PostService {
 
     public Post createPost(Post post) {
         return postRepository.save(post);
+    }
+    
+    public List<Post> getAllPosts() {
+        return postRepository.findAll();
     }
 }
 

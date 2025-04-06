@@ -15,12 +15,14 @@ const Login = ({ showLogin, handleLoginClose }) => {
     e.preventDefault();
     setError(""); // Clear previous errors
 
+    // Validate identifier and password
     try {
       const response = await axios.post("http://localhost:8080/users/login", {
         identifier,
         password,
       });
-
+      
+      // Check if the response contains user data
       if (response.data) {
         //localStorage.setItem("userIdentifier", identifier); // Store identifier
         localStorage.setItem("userId", response.data.id);
