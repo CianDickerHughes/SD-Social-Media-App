@@ -5,10 +5,16 @@ import React, { useState, useEffect } from "react";
 import profileIMG from '../img/profile-user.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios"; 
+import { Card, Spinner, Alert, Row, Col } from 'react-bootstrap';
+
 
 const Profile = () => {
   const [userData, setUserData] = useState(null); // Store user data (including profile image)
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
+  const [posts, setPosts] = useState([]); // Store posts data
+  const [loading, setLoading] = useState(true); // Track loading state
+  const [error, setError] = useState(''); // Track errors
+
 
   // Check if user is logged in when the component mounts
   useEffect(() => {
@@ -18,8 +24,11 @@ const Profile = () => {
       setIsLoggedIn(true);
       // Fetch user data (profile image) from the API
       fetchUserData(userId);
+      // Fetch the posts for the logged-in user
+      fetchUserPosts(userId); 
     } else {
       setIsLoggedIn(false);
+      setLoading(false);
     }
   }, []);
 
@@ -32,6 +41,21 @@ const Profile = () => {
       console.error("Error fetching user data:", err);
     }
   };
+
+  const fetchUserPosts = async (userId) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/posts/user/${userId}`);
+      setPosts(response.data);
+      setLoading(false);
+    } catch (err) {
+      console.error("Error fetching user posts:", err);
+      setError("Failed to load user posts");
+      setLoading(false);
+    }
+  };
+
+  if (loading) return <Spinner animation="border" />;
+  if (error) return <Alert variant="danger">{error}</Alert>;
 
   // Return the home of the home screen
   return (
@@ -57,6 +81,34 @@ const Profile = () => {
       </div>
     <p className="mt-2">{userData?.bio || "your bio."}</p>
     <hr className="border-light" />
+      {/* Display Posts */}
+      {posts.map((post) => (
+        <Card key={post.id} className="mb-4 shadow-sm" style={{ width: "85%", margin: "auto" }}>
+          <Card.Header>
+            <Row className="align-items-center">
+              <Col xs={2}>
+                <img
+                  src={userData?.profileImgUrl || profileIMG}
+                  alt="Profile"
+                  className="rounded-circle"
+                  width="50"
+                  height="50"
+                />
+              </Col>
+              <Col>
+                <div className="ms-4">
+                  <h3 className="mb-1">{userData?.name || "username"}</h3>
+                  <h4 className="mb-1">@{userData?.username || "username"}</h4>
+                </div>
+              </Col>
+            </Row>
+          </Card.Header>
+          <Card.Img variant="top" src={post.img} style={{ width: "500px", margin: "auto", border: "2px solid black" }} />
+          <Card.Body>
+            <Card.Text style={{ fontSize: "20px" }}>{post.description}</Card.Text>
+          </Card.Body>
+        </Card>
+      ))}
   </div>
   );
 };
