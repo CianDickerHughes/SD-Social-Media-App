@@ -8,6 +8,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.example.supabase.dto.PostWithUserDTO;
 import com.example.supabase.models.Post;
 import com.example.supabase.service.PostService;
 
@@ -27,15 +29,15 @@ public class PostController {
     
     // Get all posts
     @GetMapping
-    public ResponseEntity<List<Post>> getAllPosts() {
-        List<Post> posts = postService.getAllPosts();
+    public ResponseEntity<List<PostWithUserDTO>> getAllPosts() {
+        List<PostWithUserDTO> posts = postService.getAllPostsWithUserInfo();
         return ResponseEntity.ok(posts);
     }
 
     // Get all posts by userId
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Post>> getPostsByUserId(@PathVariable Long userId) {
-        List<Post> posts = postService.getPostsByUser(userId);
+    public ResponseEntity<List<PostWithUserDTO>> getPostsByUserId(@PathVariable Long userId) {
+        List<PostWithUserDTO> posts = postService.getPostsByUserWithUserInfo(userId);
         return ResponseEntity.ok(posts);
     }
     

@@ -16,30 +16,12 @@ const Content = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const postRes = await axios.get('http://localhost:8080/posts');
-        const postsData = postRes.data;
-
-        // Extract all unique userIds
-        const userIds = [...new Set(postsData.map(post => post.userId))];
-
-        // Fetch user data for each userId
-        const userPromises = userIds.map(id =>
-          axios.get(`http://localhost:8080/users/${id}`)
-        );
-        const userResponses = await Promise.all(userPromises);
-
-        // Create a map of userId -> userData
-        const userMap = {};
-        userResponses.forEach(res => {
-          userMap[res.data.id] = res.data;
-        });
-
-        setUsers(userMap);
-        setPosts(postsData);
+        const response = await axios.get('http://localhost:8080/posts');
+        setPosts(response.data);
         setLoading(false);
       } catch (err) {
         console.error(err);
-        setError('Failed to load posts or user data');
+        setError('Failed to load posts');
         setLoading(false);
       }
     };
@@ -52,37 +34,37 @@ const Content = () => {
 
   return (
     <div>
-      {posts.map((post) => {
-        const user = users[post.userId];
-
-        return (
-          <Card key={post.id} className="mb-4 shadow-sm" style={{ width: "85%",   margin: "auto" }}>
-            <Card.Header>
-              <Row className="align-items-center">
-                <Col xs={2}>
-                    <img
-                      src={user?.profileImgUrl || profileIMG}
-                      alt="Profile"
-                      className="rounded-circle"
-                      width="50"
-                      height="50"
-                    />
-                  </Col>
-                <Col>
-                  <div className="ms-4">
-                    <h3 className="mb-1">{user?.name || "username"}</h3>
-                    <h4 className="mb-1">@{user?.username || "username"}</h4>
-                  </div>
-                </Col>
-              </Row>
-            </Card.Header>
-            <Card.Img variant="top" src={post.img} style={{ width: "500px", margin: "auto", border: "2px solid black" }} />
-            <Card.Body>
-              <Card.Text style={{ fontSize: "20px" }}>{post.description}</Card.Text>
-            </Card.Body>
-          </Card>
-        );
-      })}
+      {posts.map((post) => (
+        <Card key={post.id} className="mb-4 shadow-sm" style={{ width: "85%", margin: "auto" }}>
+          <Card.Header>
+            <Row className="align-items-center">
+              <Col xs={2}>
+                <img
+                  src={post.profileImgUrl || profileIMG}
+                  alt="Profile"
+                  className="rounded-circle"
+                  width="50"
+                  height="50"
+                />
+              </Col>
+              <Col>
+                <div className="ms-4">
+                  <h3 className="mb-1">{post.uname || "Unknown"}</h3>
+                  <h4 className="mb-1">@{post.username || "unknown"}</h4>
+                </div>
+              </Col>
+            </Row>
+          </Card.Header>
+          <Card.Img
+            variant="top"
+            src={post.img}
+            style={{ width: "500px", margin: "auto", border: "2px solid black" }}
+          />
+          <Card.Body>
+            <Card.Text style={{ fontSize: "20px" }}>{post.description}</Card.Text>
+          </Card.Body>
+        </Card>
+      ))}
     </div>
   );
 };
