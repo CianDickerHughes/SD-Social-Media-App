@@ -17,8 +17,13 @@ This Project been made React, Node.js for the Front-End, Maven Spring Boot Java 
 * Run This Command to start Client-Side - `npm start` <br>
 * This will start the Client-Side at - `http://localhost:3000/` <br>
 --------------------------------------------------------------------------
-## Server
+## Running Server
 * Working in Progress
+### Running the Server
+
+* First go into BackEnd folder - `cd BackEnd\BackEndSD` <br>
+* Run This Command to start Server - `mvn spring-boot:run` <br>
+* This will start the Server at  `http://localhost:8080/` <br>
 ### Whats need to run server Locally
 <p>localhost:5432</p>
 <p>SQL and Manven install to run Locally</p>
@@ -40,8 +45,4 @@ This Project been made React, Node.js for the Front-End, Maven Spring Boot Java 
   <li>([Maven]https://maven.apache.org/download.cgi)</li>
 </ul>
 
-### Running the Server
 
-* First go into BackEnd folder - `cd BackEnd\BackEndSD` <br>
-* Run This Command to start Server - `mvn spring-boot:run` <br>
-* This will start the Server at  `http://localhost:8080/` <br>
