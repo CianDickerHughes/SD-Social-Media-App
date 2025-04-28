@@ -80,6 +80,7 @@ const Profile = () => {
         </div>
       </div>
     <p className="mt-2">{userData?.bio || "your bio."}</p>
+    <button className="btn btn-primary mt-3" onClick={() => window.location.href = "/edit"}>Edit Profile</button>
     <hr className="border-light" />
       {/* Display Posts */}
       {posts.map((post) => (

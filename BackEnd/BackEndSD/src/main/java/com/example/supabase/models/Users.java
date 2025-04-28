@@ -45,7 +45,7 @@ public class Users {
     }
 
     // Constructor
-    public Users(String name, String username, String email, String password, String profileImgUrl, boolean isPrivate) {
+    public Users(String name, String username, String email, String password, String profileImgUrl, boolean isPrivate, String bio) {
     	this.name = name;
         this.username = username;
         this.email = email;
@@ -53,6 +53,7 @@ public class Users {
         this.profileImgUrl = profileImgUrl;
         this.createdAt = Instant.now();
         this.isPrivate = isPrivate;
+        this.bio = bio;
     }
 
 	// Getters and Setters
@@ -119,4 +120,12 @@ public class Users {
     public void setIsPrivate(boolean isPrivate) {  
         this.isPrivate = isPrivate;
     }
+
+	public String getBio() {
+		return bio;
+	}
+
+	public void setBio(String bio) {
+		this.bio = bio;
+	}    
 }

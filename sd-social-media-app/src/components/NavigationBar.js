@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Button, Container, Offcanvas, Image, Dropdown, DropdownButton } from "react-bootstrap";
-import Login from "./login";
+import Login from "./Login";
 import Post from "./Post";
 import profileIMG from '../img/profile-user.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';

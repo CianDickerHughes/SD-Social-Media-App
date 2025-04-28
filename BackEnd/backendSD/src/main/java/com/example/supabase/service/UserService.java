@@ -46,4 +46,9 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    // Update user details
+    public Users updateUser(Users user) {
+        return userRepository.save(user);
+    }
+
 }

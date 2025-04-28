@@ -61,6 +61,29 @@ public class UserController {
             return ResponseEntity.badRequest().body("User not found");
         }
     }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Users> updateUser(@PathVariable int id, @RequestBody Users updatedUser) {
+        Optional<Users> existingUserOptional = userService.getUserById(id);
+        
+        if (existingUserOptional.isPresent()) {
+            Users existingUser = existingUserOptional.get();
+
+            // Update fields
+            if (updatedUser.getName() != null) existingUser.setName(updatedUser.getName());
+            if (updatedUser.getUsername() != null) existingUser.setUsername(updatedUser.getUsername());
+            if (updatedUser.getPassword() != null) existingUser.setPassword(updatedUser.getPassword());
+            if (updatedUser.getEmail() != null) existingUser.setEmail(updatedUser.getEmail());
+            if (updatedUser.getProfileImgUrl() != null) existingUser.setProfileImgUrl(updatedUser.getProfileImgUrl());
+            if (updatedUser.getBio() != null) existingUser.setBio(updatedUser.getBio());
+            existingUser.setIsPrivate(updatedUser.getIsPrivate());
+
+            Users savedUser = userService.updateUser(existingUser);
+            return ResponseEntity.ok(savedUser);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @GetMapping
     public ResponseEntity<List<Users>> getAllUsers() {
