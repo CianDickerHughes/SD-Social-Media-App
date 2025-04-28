@@ -35,33 +35,32 @@ const Content = () => {
   return (
     <div>
       {posts.map((post) => (
-        <Card key={post.id} className="mb-4 shadow-sm" style={{ width: "85%", margin: "auto" }}>
-          <Card.Header>
-            <Row className="align-items-center">
-              <Col xs={2}>
+        <Card key={post.id} className="mb-4 shadow-sm custom-card">
+          <Card.Header className="custom-card-header">
+            <Row className="d-flex align-items-center">
+              <div className="d-flex align-items-center">
                 <img
                   src={post.profileImgUrl || profileIMG}
                   alt="Profile"
                   className="rounded-circle"
-                  width="50"
-                  height="50"
+                  width="60"
+                  height="60"
                 />
-              </Col>
-              <Col>
-                <div className="ms-4">
+                <div className="ms-2"> {/* Adjusted margin to control spacing */}
                   <h3 className="mb-1">{post.uname || "Unknown"}</h3>
                   <h4 className="mb-1">@{post.username || "unknown"}</h4>
                 </div>
-              </Col>
+              </div>
             </Row>
           </Card.Header>
           <Card.Img
             variant="top"
             src={post.img}
             style={{ width: "500px", margin: "auto", border: "2px solid black" }}
+            className="custom-card-img"
           />
           <Card.Body>
-            <Card.Text style={{ fontSize: "20px" }}>{post.description}</Card.Text>
+            <Card.Text className="custom-card-text">{post.description}</Card.Text>
           </Card.Body>
         </Card>
       ))}

@@ -62,3 +62,30 @@ body {
   color: white !important;
   border: none !important;
 }
+
+/* Custom styles for the card component */
+.custom-card {
+  width: 65%;
+  margin: 20px auto;
+  border-radius: 15px;
+  background-color: #333;
+  color: white;
+  border: none;
+}
+
+.custom-card-header {
+  background-color: #444;
+  border-radius: 15px 15px 0 0;
+}
+
+.custom-card-img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  margin: 15px;
+}
+
+.custom-card-text {
+  font-size: 20px;
+  line-height: 1.5;
+}

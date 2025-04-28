@@ -42,6 +42,7 @@ const Profile = () => {
     }
   };
 
+  // Fetch posts for the logged-in user
   const fetchUserPosts = async (userId) => {
     try {
       const response = await axios.get(`http://localhost:8080/posts/user/${userId}`);
@@ -79,34 +80,39 @@ const Profile = () => {
           </div>
         </div>
       </div>
-    <p className="mt-2">{userData?.bio || "your bio."}</p>
-    <button className="btn btn-primary mt-3" onClick={() => window.location.href = "/edit"}>Edit Profile</button>
+      <div className="d-flex justify-content-between align-items-center mt-3">
+        <p className="mb-0">{userData?.bio || "your bio."}</p>
+        <button className="btn btn-primary" onClick={() => window.location.href = "/edit"}>Edit Profile</button>
+      </div>
     <hr className="border-light" />
       {/* Display Posts */}
       {posts.map((post) => (
-        <Card key={post.id} className="mb-4 shadow-sm" style={{ width: "85%", margin: "auto" }}>
-          <Card.Header>
-            <Row className="align-items-center">
-              <Col xs={2}>
+        <Card key={post.id} className="mb-4 shadow-sm custom-card">
+          <Card.Header className="custom-card-header">
+            <Row className="d-flex align-items-center">
+              <div className="d-flex align-items-center">
                 <img
-                  src={userData?.profileImgUrl || profileIMG}
+                  src={post.profileImgUrl || profileIMG}
                   alt="Profile"
                   className="rounded-circle"
-                  width="50"
-                  height="50"
+                  width="60"
+                  height="60"
                 />
-              </Col>
-              <Col>
-                <div className="ms-4">
-                  <h3 className="mb-1">{userData?.name || "username"}</h3>
-                  <h4 className="mb-1">@{userData?.username || "username"}</h4>
+                <div className="ms-2"> {/* Adjusted margin to control spacing */}
+                  <h3 className="mb-1">{post.uname || "Unknown"}</h3>
+                  <h4 className="mb-1">@{post.username || "unknown"}</h4>
                 </div>
-              </Col>
+              </div>
             </Row>
           </Card.Header>
-          <Card.Img variant="top" src={post.img} style={{ width: "500px", margin: "auto", border: "2px solid black" }} />
+          <Card.Img
+            variant="top"
+            src={post.img}
+            style={{ width: "500px", margin: "auto", border: "2px solid black" }}
+            className="custom-card-img"
+          />
           <Card.Body>
-            <Card.Text style={{ fontSize: "20px" }}>{post.description}</Card.Text>
+            <Card.Text className="custom-card-text">{post.description}</Card.Text>
           </Card.Body>
         </Card>
       ))}

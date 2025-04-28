@@ -24,8 +24,6 @@ function App() {
         <Route path="/edit" element={<EditProfile /> /* The Edit Profile page */} />
       </Routes>
     </Router>
-    
-    
   );
 }
 
