@@ -1,6 +1,16 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "SD App",
+  "name": "SD Social Media App",
+  "description": "A social media app built with React Spring boot, PostgreSQL and MongoDB, You can create posts and search for users.",
+  "theme_color": "#323232",
+  "background_color": "#ffffff",
+  "scope": "./",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["social", "communication"],
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,8 +28,48 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "shortcuts": [
+    {
+      "name": "Sign In",
+      "url": "/signIn",
+      "description": "Sign up for an account.",
+      "icons": [
+        {
+        "src": "logo192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "Home",
+      "src": "/image/home.png",
+      "type": "image/png",
+      "sizes": "500x400",
+      "form_factor": "wide"
+    },  
+    {
+      "name": "New Post",
+      "src": "/image/newpost.png",
+      "type": "image/png",
+      "sizes": "500x400",
+      "form_factor": "narrow"
+    },
+    {
+      "name": "Profile",
+      "src": "/image/profile.png",
+      "type": "image/png",
+      "sizes": "500x400",
+      "form_factor": "narrow"
+    },
+    {
+      "name": "Sign Up",
+      "src": "/image/signup.png",
+      "type": "image/png",
+      "sizes": "500x400",
+      "form_factor": "narrow"
+    }  
+  ]
 }
