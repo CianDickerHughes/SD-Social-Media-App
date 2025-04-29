@@ -2,7 +2,8 @@
 // G00415413
 
 import React, { useState, useEffect } from "react";
-import { Navbar, Nav, Button, Container, Offcanvas, Image, Dropdown, DropdownButton } from "react-bootstrap";
+import { Navbar, Nav, Button, Container, Offcanvas, Image, Dropdown, Form, FormControl } from "react-bootstrap";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import Login from "./Login";
 import Post from "./Post";
 import profileIMG from '../img/profile-user.svg';
@@ -18,6 +19,9 @@ const NavigationBar = () => {
   const [userData, setUserData] = useState(null); // Store user data (including profile image)
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
   const [showPost, setShowPost] = useState(false); // State for post modal
+  const [searchQuery, setSearchQuery] = useState("");
+  
+  const navigate = useNavigate();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -58,6 +62,27 @@ const NavigationBar = () => {
     setIsLoggedIn(false);
     window.location.reload(); // Reload the page
   };
+
+
+  // Handle search input change
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  // Handle search submit
+  const handleSearchSubmit = async (e) => {
+    e.preventDefault();
+    // Make sure search query is not empty
+    try {
+      const response = await axios.get(`http://localhost:8080/users/username/${searchQuery}`);
+      const user = response.data;
+      console.log("User found:", user);
+      navigate(`/profile?id=${user.id}`); // Redirect to /profile with user ID as a query parameter
+    } catch (error) { // Handle error if user not found
+      console.error("User not found:", error);
+      alert("User not found");
+    }
+  };
   
   return (
     <>
@@ -65,6 +90,18 @@ const NavigationBar = () => {
         <Container>
           <Navbar.Toggle aria-controls="offcanvasNavbar" onClick={handleShow} />
           <Navbar.Brand href="/" style={{ padding: "0px 15px" }}>SD-Social-Media</Navbar.Brand>
+          {/* Search Bar */}
+          <Form className="d-flex mx-auto" style={{ width: "50%" }} onSubmit={handleSearchSubmit}>
+            <FormControl
+              type="search"
+              placeholder="Search"
+              className="me-2"
+              aria-label="Search"
+              value={searchQuery}
+              onChange={handleSearchChange}
+            />
+          </Form>
+        
           <div className="ms-auto">
             {/* If the user is logged in, show profile image and dropdown for logout/profile options */}
             {isLoggedIn ? (
@@ -74,14 +111,14 @@ const NavigationBar = () => {
                     src={userData?.profileImgUrl || profileIMG} // Display profile image
                     alt="Profile"
                     roundedCircle
-                    width="40" // Size of the profile image
+                    width="40" 
                     height="40"
                     style={{ cursor: "pointer" }}
                   />
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item href="/profile">View Profile</Dropdown.Item>
+                  <Dropdown.Item href={`/profile?id=${localStorage.getItem("userId")}`}>View Profile</Dropdown.Item>
                   <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
@@ -110,7 +147,7 @@ const NavigationBar = () => {
                 <Nav.Link href="/" onClick={handleClose} style={{ padding: "10px 15px" }}>Home</Nav.Link>
                 <Nav.Link href="/bookmark" onClick={handleClose} style={{ padding: "10px 15px" }}>Bookmark</Nav.Link>
                 <Nav.Link href="/messages" onClick={handleClose} style={{ padding: "10px 15px" }}>Messages</Nav.Link>
-                <Nav.Link href="/profile" onClick={handleClose} style={{ padding: "10px 15px" }}>Profile</Nav.Link>
+                <Nav.Link href={`/profile?id=${localStorage.getItem("userId")}`} onClick={handleClose} style={{ padding: "10px 15px" }}>Profile</Nav.Link>
                 <Nav.Link href="/settings" onClick={handleClose} style={{ padding: "10px 15px" }}>Settings</Nav.Link>
                 <Nav.Link onClick={() => { handlePostShow(); handleClose(); }}>Make A Post</Nav.Link>
                 </>

@@ -2,6 +2,7 @@
 // G00415413
 
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom"; // Import useLocation from react-router-dom
 import profileIMG from '../img/profile-user.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios"; 
@@ -15,11 +16,15 @@ const Profile = () => {
   const [loading, setLoading] = useState(true); // Track loading state
   const [error, setError] = useState(''); // Track errors
 
+  const location = useLocation(); // Get the current location object
+
+  // Extract user ID from the URL query parameters
+  const searchParams = new URLSearchParams(location.search);
+  const userId = searchParams.get("id");
+
 
   // Check if user is logged in when the component mounts
   useEffect(() => {
-    // Check if user is logged in (check localStorage for userId)
-    const userId = localStorage.getItem("userId");
     if (userId) {
       setIsLoggedIn(true);
       // Fetch user data (profile image) from the API
@@ -30,7 +35,7 @@ const Profile = () => {
       setIsLoggedIn(false);
       setLoading(false);
     }
-  }, []);
+  }, [userId]);
 
   // Fetch user data from API using user ID
   const fetchUserData = async (userId) => {
