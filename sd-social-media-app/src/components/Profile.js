@@ -60,6 +60,7 @@ const Profile = () => {
     }
   };
 
+  // Handle logout by clearing the user data from localStorage and state
   if (loading) return <Spinner animation="border" />;
   if (error) return <Alert variant="danger">{error}</Alert>;
 

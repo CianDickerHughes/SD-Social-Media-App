@@ -84,6 +84,23 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+    
+    @PutMapping("private/{id}")
+    public ResponseEntity<Users> setPrivate(@PathVariable int id, @RequestBody Users updatedUser) {
+        Optional<Users> existingUserOptional = userService.getUserById(id);
+        
+        if (existingUserOptional.isPresent()) {
+            Users existingUser = existingUserOptional.get();
+
+            // Update fields
+            existingUser.setIsPrivate(updatedUser.getIsPrivate());
+
+            Users savedUser = userService.updateUser(existingUser);
+            return ResponseEntity.ok(savedUser);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @GetMapping
     public ResponseEntity<List<Users>> getAllUsers() {

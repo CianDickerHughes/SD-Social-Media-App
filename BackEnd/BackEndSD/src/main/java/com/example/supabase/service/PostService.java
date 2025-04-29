@@ -40,9 +40,11 @@ public class PostService {
         for (Post post : posts) {
             // Fetch the user by userId (converted to int — ideally should use Long)
             userRepository.findById((int) post.getUserId()).ifPresent(user -> {
-            	// Convert post and user to DTO and add to list
-                PostWithUserDTO dto = toDTO(post, user);
-                postDTOs.add(dto);
+            	// Only include post if the user is not private
+                if (!user.getIsPrivate()) {
+                    PostWithUserDTO dto = toDTO(post, user);
+                    postDTOs.add(dto);
+                }
             });
         }
 

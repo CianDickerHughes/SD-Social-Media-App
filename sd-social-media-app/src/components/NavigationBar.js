@@ -6,6 +6,7 @@ import { Navbar, Nav, Button, Container, Offcanvas, Image, Dropdown, Form, FormC
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import Login from "./Login";
 import Post from "./Post";
+import Setting from "./Setting";
 import profileIMG from '../img/profile-user.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
@@ -19,6 +20,7 @@ const NavigationBar = () => {
   const [userData, setUserData] = useState(null); // Store user data (including profile image)
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
   const [showPost, setShowPost] = useState(false); // State for post modal
+  const [showSettings, setShowSettings] = useState(false); // State for settings modal
   const [searchQuery, setSearchQuery] = useState("");
   
   const navigate = useNavigate();
@@ -31,6 +33,9 @@ const NavigationBar = () => {
 
   const handlePostClose = () => setShowPost(false); // Close post modal
   const handlePostShow = () => setShowPost(true); // Open post modal
+
+  const handleSettingsClose = () => setShowSettings(false); // Close settings modal
+  const handleSettingsShow = () => setShowSettings(true);
 
   // Check if user is logged in when the component mounts
   useEffect(() => {
@@ -148,7 +153,7 @@ const NavigationBar = () => {
                 <Nav.Link href="/bookmark" onClick={handleClose} style={{ padding: "10px 15px" }}>Bookmark</Nav.Link>
                 <Nav.Link href="/messages" onClick={handleClose} style={{ padding: "10px 15px" }}>Messages</Nav.Link>
                 <Nav.Link href={`/profile?id=${localStorage.getItem("userId")}`} onClick={handleClose} style={{ padding: "10px 15px" }}>Profile</Nav.Link>
-                <Nav.Link href="/settings" onClick={handleClose} style={{ padding: "10px 15px" }}>Settings</Nav.Link>
+                <Nav.Link onClick={() => { handleSettingsShow(); handleClose(); }} style={{ padding: "10px 15px" }}>Settings</Nav.Link>
                 <Nav.Link onClick={() => { handlePostShow(); handleClose(); }}>Make A Post</Nav.Link>
                 </>
             ) : (
@@ -164,6 +169,7 @@ const NavigationBar = () => {
       {/* Login & Post Modal */}
       <Login showLogin={showLogin} handleLoginClose={handleLoginClose} />
       <Post showPost={showPost} handlePostClose={handlePostClose} />
+      <Setting showPost={showSettings} handlePostClose={handleSettingsClose} />
     </>
   );
 };
