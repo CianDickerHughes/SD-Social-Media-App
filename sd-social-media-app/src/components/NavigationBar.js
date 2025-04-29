@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 import Login from "./Login";
 import Post from "./Post";
 import Setting from "./Setting";
+import apiConfig from "../apiConfig";
 import profileIMG from '../img/profile-user.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
@@ -22,7 +23,7 @@ const NavigationBar = () => {
   const [showPost, setShowPost] = useState(false); // State for post modal
   const [showSettings, setShowSettings] = useState(false); // State for settings modal
   const [searchQuery, setSearchQuery] = useState("");
-  
+
   const navigate = useNavigate();
 
   const handleClose = () => setShow(false);
@@ -53,7 +54,7 @@ const NavigationBar = () => {
   // Fetch user data from API using user ID
   const fetchUserData = async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:8080/users/${userId}`);
+      const response = await axios.get(`${apiConfig.baseUrl}/users/${userId}`);
       setUserData(response.data); // Store user data including profile image URL
     } catch (err) {
       console.error("Error fetching user data:", err);
@@ -79,7 +80,7 @@ const NavigationBar = () => {
     e.preventDefault();
     // Make sure search query is not empty
     try {
-      const response = await axios.get(`http://localhost:8080/users/username/${searchQuery}`);
+      const response = await axios.get(`${apiConfig.baseUrl}/users/username/${searchQuery}`);
       const user = response.data;
       console.log("User found:", user);
       navigate(`/profile?id=${user.id}`); // Redirect to /profile with user ID as a query parameter
@@ -88,26 +89,26 @@ const NavigationBar = () => {
       alert("User not found");
     }
   };
-  
+
   return (
     <>
       <Navbar bg="dark" variant="dark" expand={false}>
         <Container>
           <Navbar.Toggle aria-controls="offcanvasNavbar" onClick={handleShow} />
           <Navbar.Brand href="/" style={{ padding: "0px 15px" }}>SD-Social-Media</Navbar.Brand>
-          {/* Search Bar */}
-          <Form className="d-flex mx-auto" style={{ width: "50%" }} onSubmit={handleSearchSubmit}>
-            <FormControl
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-              value={searchQuery}
-              onChange={handleSearchChange}
-            />
-          </Form>
-        
-          <div className="ms-auto">
+          <div className="d-flex ms-auto align-items-center">
+            {/* Search Bar */}
+            <Form className="d-flex me-3" onSubmit={handleSearchSubmit}>
+              <FormControl
+                type="search"
+                placeholder="Search"
+                className="me-2"
+                aria-label="Search"
+                value={searchQuery}
+                onChange={handleSearchChange}
+                style={{ width: "200px" }} // Adjust width as needed
+              />
+            </Form>
             {/* If the user is logged in, show profile image and dropdown for logout/profile options */}
             {isLoggedIn ? (
               <Dropdown align="end">
@@ -116,7 +117,7 @@ const NavigationBar = () => {
                     src={userData?.profileImgUrl || profileIMG} // Display profile image
                     alt="Profile"
                     roundedCircle
-                    width="40" 
+                    width="40"
                     height="40"
                     style={{ cursor: "pointer" }}
                   />
@@ -155,7 +156,7 @@ const NavigationBar = () => {
                 <Nav.Link href={`/profile?id=${localStorage.getItem("userId")}`} onClick={handleClose} style={{ padding: "10px 15px" }}>Profile</Nav.Link>
                 <Nav.Link onClick={() => { handleSettingsShow(); handleClose(); }} style={{ padding: "10px 15px" }}>Settings</Nav.Link>
                 <Nav.Link onClick={() => { handlePostShow(); handleClose(); }}>Make A Post</Nav.Link>
-                </>
+              </>
             ) : (
               <>
                 <Nav.Link href="/" onClick={handleClose} style={{ padding: "10px 15px" }}>Home</Nav.Link>
@@ -176,15 +177,15 @@ const NavigationBar = () => {
 
 // Default Nav link Style
 const navLinkStyle = {
-  textDecoration: 'none',  
-  color: 'inherit',  
-  fontSize: '18px' 
+  textDecoration: 'none',
+  color: 'inherit',
+  fontSize: '18px'
 };
 
 // Active Nav link Style
 const activeNavLinkStyle = {
-  textDecoration: 'underline',  
-  color: 'inherit',  
+  textDecoration: 'underline',
+  color: 'inherit',
   fontSize: '20px',
   fontWeight: 'bold'
 };

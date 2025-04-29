@@ -3,6 +3,7 @@
 
 import React, { useState } from "react";
 import axios from "axios";
+import apiConfig from "../apiConfig";
 
 const SignUp = () => {
   const [name, setname] = useState("");
@@ -18,12 +19,12 @@ const SignUp = () => {
 
     // Send user data to the backend
     try {
-      const response = await axios.post("http://localhost:8080/users/addUser", {
+      const response = await axios.post(`${apiConfig.baseUrl}/users/addUser`, {
         name,
         username,
         email,
         password,
-        profileImgUrl: imageUrl, 
+        profileImgUrl: imageUrl,
       });
 
       // If user data has been send
@@ -39,8 +40,8 @@ const SignUp = () => {
     <div style={{ textAlign: "center", padding: "20px", backgroundColor: "#282828", color: "white" }}>
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
-      <div style={{ marginBottom: "10px" }}> { /* Name */ }
-          <input 
+        <div style={{ marginBottom: "10px" }}> { /* Name */}
+          <input
             type="text"
             placeholder="Display Name"
             value={name}
@@ -49,8 +50,8 @@ const SignUp = () => {
             required
           />
         </div>
-        <div style={{ marginBottom: "10px" }}> { /* UserName */ }
-          <input 
+        <div style={{ marginBottom: "10px" }}> { /* UserName */}
+          <input
             type="text"
             placeholder="Username"
             value={username}
@@ -59,7 +60,7 @@ const SignUp = () => {
             required
           />
         </div>
-        <div style={{ marginBottom: "10px" }}> { /* Email */ }
+        <div style={{ marginBottom: "10px" }}> { /* Email */}
           <input
             type="email"
             placeholder="Email"
@@ -69,7 +70,7 @@ const SignUp = () => {
             required
           />
         </div>
-        <div style={{ marginBottom: "10px" }}> { /* Password */ }
+        <div style={{ marginBottom: "10px" }}> { /* Password */}
           <input
             type="password"
             placeholder="Password"
@@ -80,7 +81,7 @@ const SignUp = () => {
           />
         </div>
 
-        <div style={{ marginBottom: "10px" }}> { /* Url Profile Picture */ }
+        <div style={{ marginBottom: "10px" }}> { /* Url Profile Picture */}
           <label>Profile Picture (Optional)</label><br />
           <input
             type="text"
@@ -90,8 +91,8 @@ const SignUp = () => {
             style={{ padding: "8px", width: "80%", marginTop: "10px" }}
           />
         </div>
-        { /* Deplay Url Profile Picture */ }
-        {imageUrl && ( 
+        { /* Deplay Url Profile Picture */}
+        {imageUrl && (
           <div style={{ marginBottom: "10px" }}>
             <img src={imageUrl} alt="Profile Preview" style={{ width: "100px", height: "100px", borderRadius: "50%" }} />
           </div>

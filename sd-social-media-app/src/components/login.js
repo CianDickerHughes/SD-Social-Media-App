@@ -3,6 +3,7 @@
 
 import React, { useState } from "react";
 import { Modal, Form, Button, Alert } from "react-bootstrap";
+import apiConfig from "../apiConfig";
 import axios from "axios"; // Import Axios
 
 const Login = ({ showLogin, handleLoginClose }) => {
@@ -17,11 +18,11 @@ const Login = ({ showLogin, handleLoginClose }) => {
 
     // Validate identifier and password
     try {
-      const response = await axios.post("http://localhost:8080/users/login", {
+      const response = await axios.post(`${apiConfig.baseUrl}/users/login`, {
         identifier,
         password,
       });
-      
+
       // Check if the response contains user data
       if (response.data) {
         //localStorage.setItem("userIdentifier", identifier); // Store identifier
@@ -44,7 +45,7 @@ const Login = ({ showLogin, handleLoginClose }) => {
       <Modal.Body>
         {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={handleLogin}>
-          <Form.Group className="mb-3"> { /* Email or Username */ }
+          <Form.Group className="mb-3"> { /* Email or Username */}
             <Form.Label>Email or Username</Form.Label>
             <Form.Control
               type="text"
@@ -54,7 +55,7 @@ const Login = ({ showLogin, handleLoginClose }) => {
               required
             />
           </Form.Group>
-          <Form.Group className="mb-3"> { /* Password */ }
+          <Form.Group className="mb-3"> { /* Password */}
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"

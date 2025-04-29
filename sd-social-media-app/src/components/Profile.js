@@ -2,10 +2,11 @@
 // G00415413
 
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom"; // Import useLocation from react-router-dom
+import { useLocation } from "react-router-dom";
+import apiConfig from "../apiConfig";
 import profileIMG from '../img/profile-user.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from "axios"; 
+import axios from "axios";
 import { Card, Spinner, Alert, Row, Col } from 'react-bootstrap';
 
 
@@ -30,7 +31,7 @@ const Profile = () => {
       // Fetch user data (profile image) from the API
       fetchUserData(userId);
       // Fetch the posts for the logged-in user
-      fetchUserPosts(userId); 
+      fetchUserPosts(userId);
     } else {
       setIsLoggedIn(false);
       setLoading(false);
@@ -40,7 +41,7 @@ const Profile = () => {
   // Fetch user data from API using user ID
   const fetchUserData = async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:8080/users/${userId}`);
+      const response = await axios.get(`${apiConfig.baseUrl}/users/${userId}`);
       setUserData(response.data); // Store user data including profile image URL
     } catch (err) {
       console.error("Error fetching user data:", err);
@@ -50,7 +51,7 @@ const Profile = () => {
   // Fetch posts for the logged-in user
   const fetchUserPosts = async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:8080/posts/user/${userId}`);
+      const response = await axios.get(`${apiConfig.baseUrl}/posts/user/${userId}`);
       setPosts(response.data);
       setLoading(false);
     } catch (err) {
@@ -67,14 +68,15 @@ const Profile = () => {
   // Return the home of the home screen
   return (
     <div className="container mt-5" style={{ backgroundColor: "#282828", color: "white", padding: "20px", borderRadius: "10px" }}>
+      {/* Profile Header */}
       <div className="d-flex align-items-center">
         <div style={{ backgroundColor: "white", padding: "2px", borderRadius: "50%" }}>
-          <img 
-            src={userData?.profileImgUrl || profileIMG} 
-            alt="Profile" 
-            className="rounded-circle" 
-            width="120" 
-            height="120" 
+          <img
+            src={userData?.profileImgUrl || profileIMG}
+            alt="Profile"
+            className="rounded-circle"
+            width="120"
+            height="120"
           />
         </div>
         <div className="ms-4">
@@ -88,9 +90,13 @@ const Profile = () => {
       </div>
       <div className="d-flex justify-content-between align-items-center mt-3">
         <p className="mb-0">{userData?.bio || "your bio."}</p>
-        <button className="btn btn-primary" onClick={() => window.location.href = "/edit"}>Edit Profile</button>
+        {userId === localStorage.getItem("userId") && (
+          <button className="btn btn-primary" onClick={() => window.location.href = "/edit"}>
+            Edit Profile
+          </button>
+        )}
       </div>
-    <hr className="border-light" />
+      <hr className="border-light" />
       {/* Display Posts */}
       {posts.map((post) => (
         <Card key={post.id} className="mb-4 shadow-sm custom-card">
@@ -122,7 +128,7 @@ const Profile = () => {
           </Card.Body>
         </Card>
       ))}
-  </div>
+    </div>
   );
 };
 

@@ -3,12 +3,12 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import apiConfig from "../apiConfig";
 import profileIMG from '../img/profile-user.svg';
-import { Card, Spinner, Alert, Row, Col, Image } from 'react-bootstrap';
+import { Card, Spinner, Alert, Row } from 'react-bootstrap';
 
 const Content = () => {
   const [posts, setPosts] = useState([]);
-  const [users, setUsers] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -16,7 +16,7 @@ const Content = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/posts');
+        const response = await axios.get(`${apiConfig.baseUrl}/posts`);
         setPosts(response.data);
         setLoading(false);
       } catch (err) {

@@ -3,6 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form, Alert, Spinner } from 'react-bootstrap';
+import apiConfig from '../apiConfig';
 import axios from 'axios';
 
 // Function to validate URL format
@@ -56,7 +57,7 @@ const Post = ({ showPost, handlePostClose }) => {
 
     // Send post data to the server
     try {
-      const result = await axios.post('http://localhost:8080/posts', postData, {
+      const result = await axios.post(`${apiConfig.baseUrl}/posts`, postData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -76,47 +77,47 @@ const Post = ({ showPost, handlePostClose }) => {
 
   return (
     <Modal show={showPost} onHide={handlePostClose} centered>
-    <Modal.Header closeButton>
-      <Modal.Title>Create a New Post</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
-      {error && <Alert variant="danger">{error}</Alert>}
-      {response && <Alert variant="success">Post created successfully!</Alert>}
-      <Form onSubmit={handleSubmit}>
-        {!isLoggedIn && (
-          <Alert variant="warning">Please log in to create a post.</Alert>
-        )}
-        <Form.Group className="mb-3">
-          <Form.Label>Image URL</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter Image URL"
-            value={img}
-            onChange={(e) => setImg(e.target.value)}
-            required
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            as="textarea"
-            placeholder="Enter Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-        </Form.Group>
-        <Button
-          variant="primary"
-          type="submit"
-          style={{ width: '100%' }}
-          disabled={loading || !isLoggedIn}
-        >
-          {loading ? <Spinner animation="border" size="sm" /> : 'Submit'}
-        </Button>
-      </Form>
-    </Modal.Body>
-  </Modal>
+      <Modal.Header closeButton>
+        <Modal.Title>Create a New Post</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {error && <Alert variant="danger">{error}</Alert>}
+        {response && <Alert variant="success">Post created successfully!</Alert>}
+        <Form onSubmit={handleSubmit}>
+          {!isLoggedIn && (
+            <Alert variant="warning">Please log in to create a post.</Alert>
+          )}
+          <Form.Group className="mb-3">
+            <Form.Label>Image URL</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter Image URL"
+              value={img}
+              onChange={(e) => setImg(e.target.value)}
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              as="textarea"
+              placeholder="Enter Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+          </Form.Group>
+          <Button
+            variant="primary"
+            type="submit"
+            style={{ width: '100%' }}
+            disabled={loading || !isLoggedIn}
+          >
+            {loading ? <Spinner animation="border" size="sm" /> : 'Submit'}
+          </Button>
+        </Form>
+      </Modal.Body>
+    </Modal>
   );
 };
 
