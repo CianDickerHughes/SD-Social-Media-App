@@ -7,12 +7,11 @@ import apiConfig from "../apiConfig";
 import profileIMG from '../img/profile-user.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
-import { Card, Spinner, Alert, Row, Col } from 'react-bootstrap';
+import { Card, Spinner, Alert, Row } from 'react-bootstrap';
 
 
 const Profile = () => {
   const [userData, setUserData] = useState(null); // Store user data (including profile image)
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
   const [posts, setPosts] = useState([]); // Store posts data
   const [loading, setLoading] = useState(true); // Track loading state
   const [error, setError] = useState(''); // Track errors
@@ -27,13 +26,11 @@ const Profile = () => {
   // Check if user is logged in when the component mounts
   useEffect(() => {
     if (userId) {
-      setIsLoggedIn(true);
       // Fetch user data (profile image) from the API
       fetchUserData(userId);
       // Fetch the posts for the logged-in user
       fetchUserPosts(userId);
     } else {
-      setIsLoggedIn(false);
       setLoading(false);
     }
   }, [userId]);

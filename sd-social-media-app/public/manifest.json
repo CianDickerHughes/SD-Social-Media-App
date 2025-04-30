@@ -10,7 +10,10 @@
   "orientation": "portrait",
   "lang": "en-US",
   "dir": "ltr",
-  "categories": ["social", "communication"],
+  "categories": [
+    "social",
+    "communication"
+  ],
   "icons": [
     {
       "src": "logo/logo16.png",
@@ -50,9 +53,9 @@
       "description": "Sign up for an account.",
       "icons": [
         {
-        "src": "logo/logo192.png",
-        "type": "image/png",
-        "sizes": "192x192"
+          "src": "logo/logo192.png",
+          "type": "image/png",
+          "sizes": "192x192"
         }
       ]
     }
@@ -64,7 +67,7 @@
       "type": "image/png",
       "sizes": "500x400",
       "form_factor": "wide"
-    },  
+    },
     {
       "name": "New Post",
       "src": "/image/newpost.png",
@@ -85,6 +88,6 @@
       "type": "image/png",
       "sizes": "500x400",
       "form_factor": "narrow"
-    }  
+    }
   ]
 }

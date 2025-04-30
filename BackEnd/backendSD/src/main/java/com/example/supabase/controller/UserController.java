@@ -18,14 +18,7 @@ import java.util.Optional;
 public class UserController {
 
     @Autowired
-    private UserService userService;
-
-    // Create a new user
-    // Standard Create a new user endpoint
-    /*@PostMapping
-    public ResponseEntity<Users> createUser(@RequestBody Users user) {
-        return ResponseEntity.ok(userService.createUser(user));
-    }*/
+    private UserService userService;   
     
     // Custom Create User Endpoint renamed to addUser
     @PostMapping("/addUser")
@@ -50,6 +43,7 @@ public class UserController {
             userOptional = userService.getUserByEmail(identifier);
         }
 
+        // If user is found, proceed to password verification
         if (userOptional.isPresent()) {
             Users user = userOptional.get();
             if (user.getPassword().equals(password)) { 
@@ -62,6 +56,7 @@ public class UserController {
         }
     }
     
+    // update the user account
     @PutMapping("/{id}")
     public ResponseEntity<Users> updateUser(@PathVariable int id, @RequestBody Users updatedUser) {
         Optional<Users> existingUserOptional = userService.getUserById(id);
@@ -85,6 +80,7 @@ public class UserController {
         }
     }
     
+    // update the user private account
     @PutMapping("private/{id}")
     public ResponseEntity<Users> setPrivate(@PathVariable int id, @RequestBody Users updatedUser) {
         Optional<Users> existingUserOptional = userService.getUserById(id);
@@ -102,6 +98,7 @@ public class UserController {
         }
     }
 
+    // get all users
     @GetMapping
     public ResponseEntity<List<Users>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());

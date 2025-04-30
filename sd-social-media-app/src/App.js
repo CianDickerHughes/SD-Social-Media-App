@@ -4,7 +4,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NavigationBar from './components/NavigationBar';
 import Content from './components/Content';
-import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
 import Profile from './components/Profile'
 import Post from './components/Post';
 import EditProfile from './components/EditProfile';
@@ -16,7 +16,7 @@ function App() {
       <NavigationBar /* navbar with routing */ />
       <Routes>
         <Route path="/" element={<Content /> /* The Content page */} />
-        <Route path="/signIn" element={<SignIn /> /* The signIn page */} />
+        <Route path="/signUp" element={<SignUp /> /* The SignUp page */} />
         <Route path="/profile" element={<Profile /> /* The Profile page */} />
         <Route path="/post" element={<Post /> /* The Post page */} />
         <Route path="/edit" element={<EditProfile /> /* The Edit Profile page */} />

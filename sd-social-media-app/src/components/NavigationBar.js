@@ -82,7 +82,6 @@ const NavigationBar = () => {
     try {
       const response = await axios.get(`${apiConfig.baseUrl}/users/username/${searchQuery}`);
       const user = response.data;
-      console.log("User found:", user);
       navigate(`/profile?id=${user.id}`); // Redirect to /profile with user ID as a query parameter
     } catch (error) { // Handle error if user not found
       console.error("User not found:", error);
@@ -106,7 +105,7 @@ const NavigationBar = () => {
                 aria-label="Search"
                 value={searchQuery}
                 onChange={handleSearchChange}
-                style={{ width: "200px" }} // Adjust width as needed
+                style={{ width: "320px" }} 
               />
             </Form>
             {/* If the user is logged in, show profile image and dropdown for logout/profile options */}
@@ -133,7 +132,7 @@ const NavigationBar = () => {
                 <Button variant="outline-light" className="me-2" onClick={handleLoginShow}>
                   Login
                 </Button>
-                <Button href="signIn" variant="primary">
+                <Button href="signUp" variant="primary">
                   Sign Up
                 </Button>
               </>
@@ -158,7 +157,6 @@ const NavigationBar = () => {
             ) : (
               <>
                 <Nav.Link href="/" onClick={handleClose} style={{ padding: "10px 15px" }}>Home</Nav.Link>
-                <Nav.Link href="/settings" onClick={handleClose} style={{ padding: "10px 15px" }}>Settings</Nav.Link>
               </>
             )}
           </Nav>
@@ -172,20 +170,4 @@ const NavigationBar = () => {
     </>
   );
 };
-
-// Default Nav link Style
-const navLinkStyle = {
-  textDecoration: 'none',
-  color: 'inherit',
-  fontSize: '18px'
-};
-
-// Active Nav link Style
-const activeNavLinkStyle = {
-  textDecoration: 'underline',
-  color: 'inherit',
-  fontSize: '20px',
-  fontWeight: 'bold'
-};
-
 export default NavigationBar;
