@@ -59,6 +59,7 @@ const Content = () => {
             style={{ width: "500px", margin: "auto", border: "2px solid black" }}
             className="custom-card-img"
           />
+          <hr className="border-light" />
           <Card.Body>
             <Card.Text className="custom-card-text">{post.description}</Card.Text>
           </Card.Body>
