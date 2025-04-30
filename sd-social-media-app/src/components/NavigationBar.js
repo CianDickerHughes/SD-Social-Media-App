@@ -151,8 +151,6 @@ const NavigationBar = () => {
             {isLoggedIn ? (
               <>
                 <Nav.Link href="/" onClick={handleClose} style={{ padding: "10px 15px" }}>Home</Nav.Link>
-                <Nav.Link href="/bookmark" onClick={handleClose} style={{ padding: "10px 15px" }}>Bookmark</Nav.Link>
-                <Nav.Link href="/messages" onClick={handleClose} style={{ padding: "10px 15px" }}>Messages</Nav.Link>
                 <Nav.Link href={`/profile?id=${localStorage.getItem("userId")}`} onClick={handleClose} style={{ padding: "10px 15px" }}>Profile</Nav.Link>
                 <Nav.Link onClick={() => { handleSettingsShow(); handleClose(); }} style={{ padding: "10px 15px" }}>Settings</Nav.Link>
                 <Nav.Link onClick={() => { handlePostShow(); handleClose(); }}>Make A Post</Nav.Link>
